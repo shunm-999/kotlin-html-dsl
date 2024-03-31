@@ -4,6 +4,16 @@ internal interface IndentScope {
     fun dig(): Int
 
     fun withIndent(text: String): String
+
+    fun withIndent(builder: IndentScope.() -> Unit) {
+        builder(this)
+    }
+
+    fun StringBuilder.appendLineIfNotBlank(value: String?) {
+        if (!value.isNullOrBlank()) {
+            appendLine(withIndent(value))
+        }
+    }
 }
 
 private data class IndentScopeImpl(

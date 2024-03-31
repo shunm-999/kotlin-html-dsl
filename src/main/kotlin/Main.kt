@@ -10,6 +10,13 @@ fun main() {
         html {
             language = Language.Ja
             head {
+                title = "Sample Site"
+                meta {
+                    charSet = "utf-8"
+                    "author" to "Shun"
+                    "description" to "This is Sample Site"
+                    "keywords" to "html,css,rfc"
+                }
             }
             body {
             }
