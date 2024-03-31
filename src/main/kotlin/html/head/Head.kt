@@ -12,12 +12,14 @@ internal data class Head(
     override val displayText: String
         get() =
             buildString {
+                appendLine("<head>")
                 withIndent {
-                    appendLineIfNotBlank("<title>$title</title>")
+                    appendOneLineIfNotBlank("<title>$title</title>")
                     metaData.values.forEach {
-                        appendLineIfNotBlank(it.displayText)
+                        appendOneLineIfNotBlank(it.displayText)
                     }
                 }
+                appendLine("</head>")
             }
 }
 

@@ -5,13 +5,23 @@ internal interface IndentScope {
 
     fun withIndent(text: String): String
 
-    fun withIndent(builder: IndentScope.() -> Unit) {
-        builder(this)
+    fun withIndent(builder: IndentOperatorScope.() -> Unit) {
+        builder(IndentOperatorScope(this))
+    }
+}
+
+internal data class IndentOperatorScope(val indentScope: IndentScope) {
+    fun StringBuilder.appendOneLine(value: String?) {
+        if (value?.endsWith('\n') == true) {
+            append(indentScope.withIndent(value))
+        } else {
+            append(indentScope.withIndent(value ?: "")).append('\n')
+        }
     }
 
-    fun StringBuilder.appendLineIfNotBlank(value: String?) {
+    fun StringBuilder.appendOneLineIfNotBlank(value: String?) {
         if (!value.isNullOrBlank()) {
-            appendLine(withIndent(value))
+            appendOneLine(value)
         }
     }
 }

@@ -9,7 +9,10 @@ internal sealed interface MetaData : Display {
         override val value: String,
     ) : MetaData {
         override val displayText: String
-            get() = "<meta charset=\"${value}\">"
+            get() =
+                buildString {
+                    appendLine("<meta charset=\"${value}\">")
+                }
     }
 
     data class Content(
@@ -17,6 +20,9 @@ internal sealed interface MetaData : Display {
         override val value: String,
     ) : MetaData {
         override val displayText: String
-            get() = "<meta name=\"${key}\" content=\"${value}\">"
+            get() =
+                buildString {
+                    appendLine("<meta name=\"${key}\" content=\"${value}\">")
+                }
     }
 }

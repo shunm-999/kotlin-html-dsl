@@ -1,6 +1,6 @@
 package org.example.html
 
-import org.example.ext.appendLineIfNotBlank
+import org.example.ext.appendOneLineIfNotBlank
 import org.example.html.body.Body
 import org.example.html.body.BodyScope
 import org.example.html.head.Head
@@ -14,11 +14,11 @@ data class Html internal constructor(
     override val displayText: String
         get() {
             return buildString {
-                appendLineIfNotBlank("<!DOCTYPE html>")
-                appendLineIfNotBlank("<html lang=\"${language.displayText}\">")
-                appendLineIfNotBlank(head.displayText)
-                appendLineIfNotBlank(body.displayText)
-                appendLineIfNotBlank("</html>")
+                appendOneLineIfNotBlank("<!DOCTYPE html>")
+                appendOneLineIfNotBlank("<html lang=\"${language.displayText}\">")
+                appendOneLineIfNotBlank(head.displayText)
+                appendOneLineIfNotBlank(body.displayText)
+                appendOneLineIfNotBlank("</html>")
             }
         }
 }

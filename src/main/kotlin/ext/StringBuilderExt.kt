@@ -1,7 +1,20 @@
 package org.example.ext
 
-internal fun StringBuilder.appendLineIfNotBlank(value: String?) {
+internal data class StringBuilderScope(val stringBuilder: StringBuilder)
+
+internal fun buildStringHtml(builderAction: StringBuilderScope.() -> Unit) {
+}
+
+internal fun StringBuilder.appendOneLine(value: String?) {
+    if (value?.endsWith('\n') == true) {
+        append(value)
+    } else {
+        append(value ?: "").append('\n')
+    }
+}
+
+internal fun StringBuilder.appendOneLineIfNotBlank(value: String?) {
     if (!value.isNullOrBlank()) {
-        appendLine(value)
+        appendOneLine(value)
     }
 }

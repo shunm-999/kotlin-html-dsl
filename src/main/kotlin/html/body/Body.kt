@@ -3,9 +3,17 @@ package org.example.html.body
 import org.example.html.Display
 import org.example.html.IndentScope
 
-internal data class Body(val depth: Int) : Display, IndentScope by IndentScope(depth) {
+internal data class Body(
+    val depth: Int,
+) : Display, IndentScope by IndentScope(depth) {
     override val displayText: String
-        get() = withIndent("")
+        get() =
+            buildString {
+                appendLine("<body>")
+                withIndent {
+                }
+                appendLine("</body>")
+            }
 }
 
 class BodyScope internal constructor(private val depth: Int) {
