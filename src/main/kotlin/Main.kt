@@ -32,6 +32,18 @@ fun main() {
                         "This is Text".html()
                     }
                 }
+
+                ol {
+                    li {
+                        "This is Text".html()
+                    }
+                    li {
+                        "This is Text".html()
+                    }
+                    li {
+                        "This is Text".html()
+                    }
+                }
             }
         }
     println(html.displayText)

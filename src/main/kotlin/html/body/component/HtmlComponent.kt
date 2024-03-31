@@ -157,6 +157,47 @@ data class HtmlComponentScope internal constructor(
             ),
         )
     }
+
+    fun ol(
+        id: String? = null,
+        classes: List<String> = emptyList(),
+        builder: ListItemHtmlComponentScope.() -> Unit,
+    ) {
+        val scope = ListItemHtmlComponentScope(dig())
+        builder(scope)
+        _children.add(
+            OrderedList(
+                indentScope = this,
+                id = id?.toHtmlId(),
+                classList = classes.toHtmlClass(),
+                children = scope.children,
+            ),
+        )
+    }
+}
+
+data class ListItemHtmlComponentScope internal constructor(
+    private val indentScope: IndentScope,
+) : IndentScope by indentScope {
+    private val _children: MutableList<HtmlComponent> = mutableListOf()
+    internal val children: List<HtmlComponent> = _children
+
+    fun li(
+        id: String? = null,
+        classes: List<String> = emptyList(),
+        builder: HtmlComponentScope.() -> Unit,
+    ) {
+        val scope = HtmlComponentScope(dig())
+        builder(scope)
+        _children.add(
+            ListItem(
+                indentScope = this,
+                id = id?.toHtmlId(),
+                classList = classes.toHtmlClass(),
+                children = scope.children,
+            ),
+        )
+    }
 }
 
 private fun String.toHtmlId(): HtmlComponentId = HtmlComponentId(this)
