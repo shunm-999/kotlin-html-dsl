@@ -2,7 +2,7 @@ package org.example.html
 
 import org.example.ext.appendOneLineIfNotBlank
 import org.example.html.body.Body
-import org.example.html.body.BodyScope
+import org.example.html.body.component.HtmlComponentScope
 import org.example.html.head.Head
 import org.example.html.head.HeadScope
 
@@ -47,15 +47,22 @@ class HtmlScope internal constructor() : IndentScope by IndentScope(0) {
         )
 
     fun head(builder: HeadScope.() -> Unit) {
-        val scope = HeadScope(depth = dig())
+        val scope =
+            HeadScope(
+                indentScope = this,
+            )
         builder(scope)
         head = scope.build()
     }
 
-    fun body(builder: BodyScope.() -> Unit) {
-        val scope = BodyScope(depth = dig())
+    fun body(builder: HtmlComponentScope.() -> Unit) {
+        val scope = HtmlComponentScope(dig())
         builder(scope)
-        body = scope.build()
+        body =
+            Body(
+                indentScope = this,
+                children = scope.children,
+            )
     }
 }
 

@@ -19,6 +19,11 @@ fun main() {
                 }
             }
             body {
+                p {
+                    div {
+                        "This is Text".html()
+                    }
+                }
             }
         }
     println(html.displayText)

@@ -5,31 +5,35 @@ import org.example.html.IndentScope
 import org.example.html.head.component.MetaData
 
 internal data class Head(
-    val depth: Int,
-    val title: String,
-    val metaData: Map<String, MetaData>,
-) : Display, IndentScope by IndentScope(depth) {
+    private val indentScope: IndentScope,
+    private val title: String,
+    private val metaData: Map<String, MetaData>,
+) : Display, IndentScope by indentScope {
     override val displayText: String
         get() =
             buildString {
-                appendLine("<head>")
                 withIndent {
-                    appendOneLineIfNotBlank("<title>$title</title>")
-                    metaData.values.forEach {
-                        appendOneLineIfNotBlank(it.displayText)
+                    appendOneLineWithIndent("<head>")
+                    addIndent {
+                        appendOneLineWithIndentIfNotBlank("<title>$title</title>")
+                        metaData.values.forEach {
+                            appendOneLineWithIndentIfNotBlank(it.displayText)
+                        }
                     }
+                    appendOneLineWithIndent("</head>")
                 }
-                appendLine("</head>")
             }
 }
 
-class HeadScope internal constructor(private val depth: Int) {
+class HeadScope internal constructor(
+    private val indentScope: IndentScope,
+) : IndentScope by indentScope {
     var title: String = ""
     private val metaData: MutableMap<String, MetaData> = mutableMapOf()
 
     internal fun build(): Head =
         Head(
-            depth = depth,
+            indentScope = this,
             title = title,
             metaData = metaData,
         )

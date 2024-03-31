@@ -2,9 +2,6 @@ package org.example.ext
 
 internal data class StringBuilderScope(val stringBuilder: StringBuilder)
 
-internal fun buildStringHtml(builderAction: StringBuilderScope.() -> Unit) {
-}
-
 internal fun StringBuilder.appendOneLine(value: String?) {
     if (value?.endsWith('\n') == true) {
         append(value)
@@ -16,5 +13,11 @@ internal fun StringBuilder.appendOneLine(value: String?) {
 internal fun StringBuilder.appendOneLineIfNotBlank(value: String?) {
     if (!value.isNullOrBlank()) {
         appendOneLine(value)
+    }
+}
+
+internal fun StringBuilder.appendIfNotBlank(value: String?) {
+    if (!value.isNullOrBlank()) {
+        append(value)
     }
 }

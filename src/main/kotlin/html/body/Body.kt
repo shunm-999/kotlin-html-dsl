@@ -1,21 +1,21 @@
 package org.example.html.body
 
+import org.example.ext.appendOneLineIfNotBlank
 import org.example.html.Display
 import org.example.html.IndentScope
+import org.example.html.body.component.HtmlComponent
 
 internal data class Body(
-    val depth: Int,
-) : Display, IndentScope by IndentScope(depth) {
+    private val indentScope: IndentScope,
+    private val children: List<HtmlComponent>,
+) : Display, IndentScope by indentScope {
     override val displayText: String
         get() =
             buildString {
-                appendLine("<body>")
                 withIndent {
+                    appendOneLineWithIndent("<body>")
+                    appendOneLineIfNotBlank(children.lines)
+                    appendOneLineWithIndent("</body>")
                 }
-                appendLine("</body>")
             }
-}
-
-class BodyScope internal constructor(private val depth: Int) {
-    internal fun build(): Body = Body(depth = depth)
 }
