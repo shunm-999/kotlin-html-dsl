@@ -19,8 +19,16 @@ fun main() {
                 }
             }
             body {
-                p {
-                    div {
+                val classes = listOf("class-1", "class-2", "class-3")
+                p(
+                    id = "id-1",
+                    classes = classes,
+                ) {
+                    "This is Text".html()
+                    div(
+                        id = "id-2",
+                        classes = classes,
+                    ) {
                         "This is Text".html()
                     }
                 }
